@@ -53,16 +53,36 @@ export const createFaculty = async (req, res) => {
 };
 
 
+
 export const updateFaculty = async (req, res) => {
+  try {
     const { id } = req.params;
     const updates = req.body;
 
+    // Find the faculty
     const faculty = await Faculty.findById(id);
     if (!faculty) return res.status(404).json({ message: 'Faculty not found' });
 
+    // Update Faculty fields
     await Faculty.findByIdAndUpdate(id, updates);
-    res.json({ message: 'Faculty updated successfully' });
+
+    // If name or email is included, update the linked User
+    if (updates.name || updates.email) {
+      const user = await User.findById(faculty.user);
+      if (user) {
+        if (updates.name) user.name = updates.name;
+        if (updates.email) user.email = updates.email;
+        await user.save();
+      }
+    }
+
+    res.json({ message: 'Faculty and user updated successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error while updating faculty' });
+  }
 };
+
 
 export const deleteFaculty = async (req, res) => {
   try {
