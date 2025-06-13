@@ -9,7 +9,7 @@ import adminRoutes from './routes/adminRoutes.js';
 
 const app = express();
 
-const allowedOrigins = ['https://fms-frontend-omega.vercel.app', 'http://localhost:5174'];
+const allowedOrigins = ['https://fms-frontend-harsha.vercel.app', 'http://localhost:5174'];
 
 app.use(cors({
   origin: function (origin, callback) {
