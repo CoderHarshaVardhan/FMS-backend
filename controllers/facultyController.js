@@ -46,7 +46,7 @@ export const createFaculty = async (req, res) => {
     });
 
     await FacultyPerformance.create({
-        facultyId: user._id
+        facultyId: faculty._id
     });
 
     res.status(201).json({ message: 'Faculty created successfully', faculty });
