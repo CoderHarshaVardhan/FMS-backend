@@ -4,6 +4,7 @@ import FacultyPerformance from '../models/FacultyPerformance.js';
 import Feedback from "../models/Feedback.js"
 import bcrypt from 'bcryptjs';
 import LeaveRequest from '../models/LeaveRequest.js';
+import Timetable from '../models/Timetable.js';
 
 
 export const getAllFaculties = async (req, res) => {
@@ -94,6 +95,7 @@ export const deleteFaculty = async (req, res) => {
     await Feedback.deleteMany({ faculty: faculty._id });
     await User.findByIdAndDelete(faculty.user);
     await LeaveRequest.deleteMany({ faculty: faculty._id });
+    await Timetable.deleteMany({ faculty: faculty._id });
 
     await Faculty.findByIdAndDelete(id);
 
